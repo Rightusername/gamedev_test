@@ -33,6 +33,7 @@ export default {
 
   .app-router-wrapper {
     margin: 0 auto;
+    width: 100%;
   }
 }
 </style>
