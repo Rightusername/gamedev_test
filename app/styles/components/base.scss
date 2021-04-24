@@ -1,0 +1,97 @@
+
+.app-logo {
+  color: white;
+}
+
+.page {
+  min-height: 100%;
+  flex-direction: column;
+  display: flex;
+
+  .page-content {
+    width: 100%;
+    flex-grow: 1;
+    padding: 0 50px;
+    box-sizing: border-box;
+
+
+  }
+  @media screen and (max-width: 950px) {
+    .page-content {
+      padding: 0px 30px;
+    }
+  }
+}
+
+nav.breadcrumb {
+  ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      .separator {
+        height: 10px;
+        width: auto;
+        flex-shrink: 0;
+        margin: 0 15px;
+
+        path {
+          fill: #a8b0cd;
+        }
+      }
+      a {
+        display: flex;
+        align-items: center;
+        color: #585862;
+        font-weight: 600;
+        font-size: 16px;
+        .icon {
+          height: 16px;
+          width: auto;
+          flex-shrink: 0;
+          margin-right: 8px;
+
+          path {
+            fill: #252f57;
+          }
+        }
+
+      }
+
+      &:last-child {
+        a {
+          color: #a8b0cd;
+          .icon {
+            path {
+              fill: #a8b0cd;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1480px) {
+    ul {
+      line-height: 1.4;
+      li {
+        a {
+          font-weight: 500;
+          font-size: 13px;
+
+          .icon {
+            height: 12px;
+          }
+        }
+
+        .separator {
+        }
+      }
+    }
+  }
+}
+

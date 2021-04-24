@@ -1,0 +1,102 @@
+@import './vars/colors.scss';
+
+@mixin header () {
+  background: $gray-lightest;
+  height: 48px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 $spacer;
+  font-weight: 500;
+}
+@mixin footer() {
+  background: $gray-lightest;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 $spacer;
+  font-weight: 500;
+  border-top: 1px solid $gray-light;
+}
+
+@mixin tr() {
+  transition:  .3s linear;
+}
+
+@mixin textDecoratorStroke($color: black) {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -0.3em;
+    left: 0px;
+    height: 0.1em;
+    width: 1.5em;
+    background: $color;
+  }
+}
+
+@mixin scrollbar($width) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #efefef;
+    border-radius: 50px;
+  }
+
+
+  &::-webkit-scrollbar-thumb:active {
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-track:hover {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-track:active {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+}
+
+@mixin placeholderColor($color) {
+  &::placeholder {
+    color: $color;
+    opacity: 1;
+    font-weight: 100;
+    /* Firefox */
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $color;
+    font-weight: 100;
+  }
+
+  &::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $color;
+    font-weight: 100;
+  }
+
+  &:focus::placeholder {
+    color: transparent;
+  }
+}

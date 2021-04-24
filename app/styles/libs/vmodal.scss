@@ -1,0 +1,52 @@
+.v--modal {
+  background: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.v--modal-overlay {
+  background: transparent !important;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: .2s ease;
+
+  .t-modal .modal {
+    transition: .2s ease;
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.modal-enter,
+.modal-leave-to
+  {
+  transition: .2s ease;
+
+  .t-modal .modal {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
+
+
+
+.overlay-enter-active,
+.overlay-leave-active {
+  transition: .2s ease;
+  .t-modal {
+    transition: .2s ease;
+    opacity: 1;
+  }
+}
+
+.overlay-enter,
+.overlay-leave-to
+{
+  transition: .2s ease;
+  .t-modal {
+    transition: .2s ease;
+    opacity: 0;
+  }
+}

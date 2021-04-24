@@ -1,0 +1,133 @@
+.btn-rounded{
+    border-radius: 4px;
+    border: none;
+    border-bottom: 3px solid;
+    cursor: pointer;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    padding: 11px 0;
+}
+
+.t-input {
+    font-family: "Didact Gothic";
+    font-size: 14px;
+    background: #FBFBFB;
+    border: 1px solid #000000;
+    resize: none;
+    border-radius: 0px;
+    padding: 1em;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.primary-btn {
+    background: #3155dc;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 0px;
+    font-weight: 600;
+    padding: 1em;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    &:hover {
+        background: lighten(#3155dc, 4%);
+    }
+
+    &.disabled {
+        background: #c1e3fd;
+        background: lighten(black, 35%);
+    }
+}
+
+.secondary-btn {
+    background: white;
+    color: #252f57;
+    border: 1px solid #eaebf3;
+    font-size: 14px;
+    border-radius: 0px;
+    font-weight: 600;
+    padding: 1em;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    &:hover {
+        background: darken(white, 4%);
+    }
+
+    &.disabled {
+        background: #c1e3fd;
+        background: lighten(black, 35%);
+    }
+}
+
+@mixin input-range{
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+        background: linear-gradient(to bottom,
+            transparent 0% 43.75%,
+            #9b9b9b 43.75% 56.25%,
+            transparent 56.25% 100%,
+        );
+    }
+
+    &::-webkit-slider-thumb {
+         height: 16px;
+         width: 16px;
+         border-radius: 50%;
+         background: #168aec;
+         cursor: pointer;
+         -webkit-appearance: none;
+    }
+
+    &::-ms-track {
+        width: 100%;
+        cursor: pointer;
+
+        /* Hides the slider so custom styles can be added */
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+
+
+}
+
+@mixin checkbox{
+    height: 8px;
+    width: 20px;
+    border-radius: 4px;
+    background: #9b9b9b;
+    position: relative;
+    cursor: pointer;
+
+    &:after{
+        content: '';
+        position: absolute;
+        top: -4px;
+        left:-4px;
+        width: 16px;
+        height: 16px;
+        background: #168aec;
+        border-radius: 50%;
+    }
+}

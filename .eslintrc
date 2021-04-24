@@ -1,0 +1,32 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "webextensions": true
+  },
+  "extends": ["eslint:recommended", "plugin:vue/recommended", "@vue/prettier"],
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "sourceType": "module",
+    "ecmaVersion": 9,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": false
+    }
+  },
+  "plugins": [
+    "vue"
+  ],
+  "rules": {
+    "require-jsdoc": 0,
+    "no-redeclare": 0,
+    "no-console": 0,
+  },
+  "globals": {
+    "module": true,
+    "Promise": true,
+    "require": true,
+    "process": true,
+    "console": true
+  }
+}
