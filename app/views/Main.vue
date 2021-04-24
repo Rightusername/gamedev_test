@@ -3,9 +3,15 @@
     <v-app>
       <v-main>
         <v-app-bar class="flex-grow-0 ">
-          <v-form class="container" @submit.prevent="fetchPackages">
+          <v-form ref="searchForm" class="container" @submit.prevent="fetchPackages">
             <v-row justify="space-between" align="center">
-              <v-text-field required placeholder="Package name" v-model="searchQuery" hide-details></v-text-field>
+              <v-text-field
+                v-model="searchQuery"
+                :rules="searchRules"
+                required
+                placeholder="Package name"
+                hide-details="auto"
+              ></v-text-field>
               <v-btn class="mr-4 green white--text" type="submit">
                 Search
               </v-btn>
@@ -15,7 +21,7 @@
 
         <v-container class="packages-list flex-grow-1">
           <v-progress-circular v-if="loading" indeterminate color="green"></v-progress-circular>
-          <div v-if="!loading && packages.length === 0" class="no-packages">Packages not found</div>
+          <div v-if="!loading && loaded && packages.length === 0" class="no-packages">Packages not found</div>
           <v-list v-if="!loading && packages && packages.length > 0">
             <v-list-item
               v-for="item in pagedItems"
@@ -52,8 +58,7 @@ import { searchPackages } from '../utils/api/packages.js';
 import AppFooter from '../components/AppFooter.vue';
 
 /* TODO
- * set 250 packages limit ? change api
- *
+ * form required
  * */
 
 export default {
@@ -62,11 +67,13 @@ export default {
   data() {
     return {
       searchQuery: '',
+      searchRules: [v => !!v || 'Name is required', v => (v && v.length > 2) || 'Name must be more than 2 characters'],
       loading: false,
+      loaded: false,
 
       page: 1,
       perPage: 10,
-      packages: null,
+      packages: [],
     };
   },
   computed: {
@@ -91,6 +98,9 @@ export default {
 
   methods: {
     fetchPackages() {
+      if (!this.$refs.searchForm.validate()) {
+        return;
+      }
       this.loading = true;
       this.page = 1;
       searchPackages(this.searchQuery)
@@ -100,6 +110,7 @@ export default {
           if (res.status === 200) {
             this.packages = res.data.objects;
             this.applyRouteParams();
+            this.loaded = true;
           } else {
             console.log('error fetchPackages');
           }
