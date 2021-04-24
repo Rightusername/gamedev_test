@@ -168,7 +168,6 @@ const production = {
   ...base,
   output: {
     path: path.join(__dirname, 'docs'),
-    publicPath: '/',
     filename: 'js/[name].[contenthash].js'
   },
   mode: 'production',
