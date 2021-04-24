@@ -2,19 +2,21 @@
   <div class="app-main page">
     <v-app>
       <v-main>
-        <v-app-bar>
-          <v-form @submit.prevent="fetchPackages" class="container">
-              <v-row justify="space-between" align="center">
-                <v-text-field v-model="searchQuery" hide-details></v-text-field>
-                <v-btn class="mr-4" type="submit">
-                  Search
-                </v-btn>
-              </v-row>
+        <v-app-bar class="flex-grow-0 ">
+          <v-form class="container" @submit.prevent="fetchPackages">
+            <v-row justify="space-between" align="center">
+              <v-text-field required placeholder="Package name" v-model="searchQuery" hide-details></v-text-field>
+              <v-btn class="mr-4 green white--text" type="submit">
+                Search
+              </v-btn>
+            </v-row>
           </v-form>
         </v-app-bar>
 
-        <v-container>
-          <v-list>
+        <v-container class="packages-list flex-grow-1">
+          <v-progress-circular v-if="loading" indeterminate color="green"></v-progress-circular>
+          <div v-if="!loading && packages.length === 0" class="no-packages">Packages not found</div>
+          <v-list v-if="!loading && packages && packages.length > 0">
             <v-list-item
               v-for="item in pagedItems"
               :key="item.id"
@@ -28,53 +30,39 @@
               <p>{{ item.package.description }}</p>
             </v-list-item>
           </v-list>
-          <!--            <div v-for="item in pagedItems" :key="item.id" @click="showPackageDetails(item)">{{ item.package.name }}</div>-->
         </v-container>
 
         <v-pagination
-          v-if="packages && packages.length > perPage"
+          v-if="packages && packages.length > perPage && !loading"
           v-model="page"
-          :length="packages.length / perPage"
+          total-visible="8"
+          :length="Math.ceil(packages.length / perPage)"
         ></v-pagination>
       </v-main>
 
-      <v-footer>
-        <v-card width="100%" class="black lighten-1 text-right">
-          <v-card-text>
-            <a href="https://github.com/Rightusername/gamedev_test" target="_blank">
-              <v-btn class="mx-4">
-                <v-icon size="24px">
-                  mdi-git
-                </v-icon>
-                <span>GitHub</span>
-              </v-btn>
-            </a>
-          </v-card-text>
-
-          <v-divider></v-divider>
-        </v-card>
-      </v-footer>
+      <AppFooter />
     </v-app>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import api from '../utils/api.js';
 import InstallAppModal from '../components/modals/PackageDetailsModal.vue';
+import { searchPackages } from '../utils/api/packages.js';
+import AppFooter from '../components/AppFooter.vue';
 
 /* TODO
- *  adaptive
  * set 250 packages limit ? change api
- * add search loader
+ *
  * */
 
 export default {
   name: 'Main',
-  components: {},
+  components: { AppFooter },
   data() {
     return {
       searchQuery: '',
+      loading: false,
 
       page: 1,
       perPage: 10,
@@ -103,19 +91,21 @@ export default {
 
   methods: {
     fetchPackages() {
-      api()
-        .get(`/-/v1/search?text=${this.searchQuery}`)
+      this.loading = true;
+      this.page = 1;
+      searchPackages(this.searchQuery)
         .then(res => {
+          console.log(res);
+          this.loading = false;
           if (res.status === 200) {
             this.packages = res.data.objects;
-
             this.applyRouteParams();
-            console.log(res.data);
           } else {
             console.log('error fetchPackages');
           }
         })
         .catch(err => {
+          this.loading = false;
           console.log(err);
         });
     },
@@ -134,7 +124,7 @@ export default {
     },
 
     applyRouteParams() {
-      if (!this.$route.query.search) {
+      if (this.$route.query.search !== this.searchQuery) {
         this.$router.replace({ query: { search: this.searchQuery } });
       }
     },
@@ -151,6 +141,28 @@ export default {
     button {
       margin-left: 25px;
       margin-right: 0 !important;
+    }
+  }
+
+  /deep/ .v-main__wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .packages-list {
+    display: flex;
+    justify-content: center;
+
+    .v-progress-circular {
+      margin-top: 100px;
+    }
+
+    .no-packages {
+      margin-top: 100px;
+    }
+
+    .v-list {
+      width: 100%;
     }
   }
 
@@ -178,7 +190,6 @@ export default {
       color: gray;
     }
   }
-
 
   .v-footer {
     margin-top: 25px;

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import api from '../../utils/api.js';
+import { api } from '../../utils/api/packages.js';
 
 export default {
   name: 'PackageDetailsModal',
@@ -49,12 +49,11 @@ export default {
     };
   },
   mounted() {
-    console.log(this.item);
     this.fetchPackage();
   },
   methods: {
     fetchPackage() {
-      api()
+      api
         .get(`/${this.item.package.name}`)
         .then(res => {
           console.log(res.data);
@@ -105,9 +104,7 @@ export default {
 
     .v-card__title {
       padding-bottom: 8px;
-
     }
-
 
     .v-card {
       width: 100%;

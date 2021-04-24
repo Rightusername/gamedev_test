@@ -9,7 +9,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import api from './utils/api.js';
 import InstallAppModal from './components/modals/PackageDetailsModal.vue';
 
 export default {

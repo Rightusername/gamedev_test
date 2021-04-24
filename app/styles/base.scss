@@ -1,6 +1,5 @@
  @mixin maxwidth() {
    max-width: $width;
-   min-width: 1000px;
    margin: 0 auto;
    padding: 0 30px;
    box-sizing: border-box;
