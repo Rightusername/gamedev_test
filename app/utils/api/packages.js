@@ -9,5 +9,5 @@ export function searchPackages(searchQuery) {
 }
 
 export function fetchPackage(name) {
-  return api.get(`/${name}`);
+  return axios.get(`https://data.jsdelivr.com/v1/package/npm/${name}`);
 }

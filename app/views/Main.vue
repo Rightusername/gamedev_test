@@ -57,10 +57,6 @@ import InstallAppModal from '../components/modals/PackageDetailsModal.vue';
 import { searchPackages } from '../utils/api/packages.js';
 import AppFooter from '../components/AppFooter.vue';
 
-/* TODO
- * form required
- * */
-
 export default {
   name: 'Main',
   components: { AppFooter },
@@ -98,7 +94,7 @@ export default {
 
   methods: {
     fetchPackages() {
-      if (!this.$refs.searchForm.validate()) {
+      if (this.$refs.searchForm && !this.$refs.searchForm.validate()) {
         return;
       }
       this.loading = true;

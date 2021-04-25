@@ -8,23 +8,21 @@
         </header>
         <v-card-text>{{ item.package.description }}</v-card-text>
 
-        <v-skeleton-loader v-if="!loaded" type="list-item"></v-skeleton-loader>
-        <div v-if="loaded" class="details">
-          <v-card-subtitle>Homepage</v-card-subtitle>
+        <div class="details">
+          <v-card-subtitle>Publisher email</v-card-subtitle>
           <v-card-text>
-            <a :href="details.homepage">{{ details.homepage }}</a>
-          </v-card-text>
-          <v-card-subtitle>License</v-card-subtitle>
-          <v-card-text>
-            {{ details.license }}
+            <a :href="item.package.publisher.email">{{ item.package.publisher.email }}</a>
           </v-card-text>
           <v-card-subtitle>Maintainers</v-card-subtitle>
-          <v-card-text>
-            <span v-for="maintainer in details.maintainers" :key="maintainer.id">{{ maintainer.name }}</span>
+          <v-card-text class="maintainers">
+            <span v-for="maintainer in item.package.maintainers" :key="maintainer.id">{{ maintainer.username }}</span>
           </v-card-text>
-          <div class="versions">
-            <!--            <div class="version" v-for="version in details.versions">{{version.version}}</div>-->
-          </div>
+          <v-skeleton-loader v-if="!loaded" type="list-item"></v-skeleton-loader>
+
+          <v-card-subtitle v-if="loaded">Versions</v-card-subtitle>
+          <v-card-text class="versions" v-if="loaded">
+            <span class="version" v-for="version in details.versions">{{version}}</span>
+          </v-card-text>
         </div>
       </v-card>
     </div>
@@ -32,7 +30,7 @@
 </template>
 
 <script>
-import { api } from '../../utils/api/packages.js';
+import { fetchPackage } from '../../utils/api/packages.js';
 
 export default {
   name: 'PackageDetailsModal',
@@ -53,11 +51,10 @@ export default {
   },
   methods: {
     fetchPackage() {
-      api
-        .get(`/${this.item.package.name}`)
+      fetchPackage(this.item.package.name)
         .then(res => {
-          console.log(res.data);
-          this.parseDetails(res.data);
+          console.log(res.data, this.item);
+          this.details = res.data;
           this.loaded = true;
         })
         .catch(err => {
@@ -66,15 +63,6 @@ export default {
     },
     close() {
       this.$emit('close');
-    },
-
-    parseDetails(data) {
-      this.details = data;
-
-      this.details.versions = [];
-      for (let key in data.versions) {
-        this.details.versions.push(data.versions[key]);
-      }
     },
   },
 };
@@ -106,6 +94,7 @@ export default {
       padding-bottom: 8px;
     }
 
+
     .v-card {
       width: 100%;
       height: 100%;
@@ -124,6 +113,13 @@ export default {
           padding-right: 16px;
           font-size: 16px;
         }
+      }
+    }
+
+    .v-card__text {
+      span {
+        margin-right: 8px;
+        white-space: nowrap;
       }
     }
   }
