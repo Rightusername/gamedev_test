@@ -20,8 +20,8 @@
           <v-skeleton-loader v-if="!loaded" type="list-item"></v-skeleton-loader>
 
           <v-card-subtitle v-if="loaded">Versions</v-card-subtitle>
-          <v-card-text class="versions" v-if="loaded">
-            <span class="version" v-for="version in details.versions">{{version}}</span>
+          <v-card-text v-if="loaded" class="versions">
+            <span v-for="version in details.versions" :key="version.id" class="version">{{ version }}</span>
           </v-card-text>
         </div>
       </v-card>
@@ -53,7 +53,6 @@ export default {
     fetchPackage() {
       fetchPackage(this.item.package.name)
         .then(res => {
-          console.log(res.data, this.item);
           this.details = res.data;
           this.loaded = true;
         })
@@ -93,7 +92,6 @@ export default {
     .v-card__title {
       padding-bottom: 8px;
     }
-
 
     .v-card {
       width: 100%;

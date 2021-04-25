@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="app-confirm-modal t-modal"
-    data-close="true"
-    @mousedown="onClose"
-  >
+  <div class="app-confirm-modal t-modal" data-close="true" @mousedown="onClose">
     <div class="modal">
       <header>
         <div class="title">{{ data.title }}</div>
@@ -40,10 +36,10 @@
       </header>
       <main>
         <p>
-          {{data.text}}
+          {{ data.text }}
         </p>
         <div class="controls">
-          <div class="controls-btn cancel" @click="close" v-if="data.btns.cancel">
+          <div v-if="data.btns.cancel" class="controls-btn cancel" @click="close">
             {{ data.btns.cancel.title ? data.btns.cancel.title : 'Cancel' }}
           </div>
           <div class="controls-btn confirm" @click="confirm">
@@ -95,11 +91,7 @@ export default {
     },
 
     confirm() {
-      if (
-        this.data.btns &&
-        this.data.btns.confirm &&
-        this.data.btns.confirm.callback
-      ) {
+      if (this.data.btns && this.data.btns.confirm && this.data.btns.confirm.callback) {
         this.data.btns.confirm.callback();
       }
 

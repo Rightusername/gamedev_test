@@ -53,9 +53,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import InstallAppModal from '../components/modals/PackageDetailsModal.vue';
-import { searchPackages } from '../utils/api/packages.js';
+import PackageDetailsModal from '../components/modals/PackageDetailsModal.vue';
 import AppFooter from '../components/AppFooter.vue';
+
+import { searchPackages } from '../utils/api/packages.js';
 
 export default {
   name: 'Main',
@@ -101,7 +102,6 @@ export default {
       this.page = 1;
       searchPackages(this.searchQuery)
         .then(res => {
-          console.log(res);
           this.loading = false;
           if (res.status === 200) {
             this.packages = res.data.objects;
@@ -119,7 +119,7 @@ export default {
 
     showPackageDetails(item) {
       this.$modal.show(
-        InstallAppModal,
+        PackageDetailsModal,
         {
           item: item,
         },

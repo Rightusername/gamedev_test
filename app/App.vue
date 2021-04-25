@@ -9,17 +9,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import InstallAppModal from './components/modals/PackageDetailsModal.vue';
 
 export default {
   name: 'App',
   components: {},
   data() {
-    return {
-
-    };
+    return {};
   },
-
 };
 </script>
 
